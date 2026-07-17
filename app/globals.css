@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+  --font-mono: var(--font-mono);
+}
+
+:root {
+  /* Base (dark) */
+  --bg-primary: #0A0A0B;
+  --bg-secondary: #111113;
+  --bg-elevated: #1A1A1E;
+  --bg-surface: #222226;
+
+  /* Accent (dourado/âmbar) */
+  --accent-50: #FFF8E7;
+  --accent-100: #FEECC0;
+  --accent-200: #FDD889;
+  --accent-400: #F5B731;
+  --accent-500: #D4960A;
+  --accent-600: #A67508;
+  --accent-900: #3D2B04;
+
+  /* Texto */
+  --text-primary: #F5F5F3;
+  --text-secondary: #A0A0A0;
+  --text-muted: #666666;
+  --text-accent: #F5B731;
+
+  /* Bordas */
+  --border-default: #2A2A2E;
+  --border-strong: #3A3A3E;
+  --border-accent: #F5B731;
+
+  /* Semânticos */
+  --success: #34D399;
+  --warning: #FBBF24;
+  --danger: #F87171;
+  --whatsapp: #25D366;
+
+  /* Gradients */
+  --gradient-accent: linear-gradient(135deg, #F5B731 0%, #D4960A 100%);
+  --gradient-glow: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(245, 183, 49, 0.06) 0%, transparent 100%);
+  --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 183, 49, 0.12) 0%, transparent 70%);
+
+  /* Layout */
+  --max-width: 1200px;
+  --padding-x: 1.5rem;
+  --padding-x-md: 3rem;
+  --padding-x-lg: 4rem;
+  --section-gap: 8rem;
+  --section-gap-mobile: 5rem;
+
+  /* Tipografia */
+  --text-hero: 4.5rem;
+  --text-h1: 3rem;
+  --text-h2: 2rem;
+  --text-h3: 1.5rem;
+  --text-body: 1.125rem;
+  --text-small: 0.875rem;
+  --text-xs: 0.75rem;
+
+  --tracking-tight: -0.03em;
+  --tracking-normal: -0.01em;
+  --tracking-wide: 0.08em;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body), -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+::selection {
+  background-color: rgba(245, 183, 49, 0.3);
+  color: var(--text-primary);
+}
