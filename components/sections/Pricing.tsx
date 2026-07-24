@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
 import ROICalculator from "@/components/interactive/ROICalculator";
+import { useUtmParams } from "@/hooks/useUtmParams";
+import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
 
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -75,6 +77,8 @@ const plans = [
 ];
 
 export default function Pricing() {
+  const utmParams = useUtmParams();
+
   return (
     <section
       id="precos"
@@ -201,8 +205,16 @@ export default function Pricing() {
               <div className="mt-8">
                 <Button
                   variant={plan.highlight ? "primary" : "secondary"}
-                  href={`https://gestao-leads-three.vercel.app/signup?plano=${plan.slug}`}
+                  href={buildSignupUrl(plan.slug, utmParams)}
                   className="w-full"
+                  onClick={() => {
+                    trackEvent("cta_click", {
+                      location: "pricing",
+                      action: "signup",
+                      plan: plan.slug,
+                    });
+                    trackPixel("Lead");
+                  }}
                 >
                   Começar teste grátis
                 </Button>

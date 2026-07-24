@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "./Button";
+import { useUtmParams } from "@/hooks/useUtmParams";
+import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
 
 const navLinks = [
   { label: "Como funciona", href: "#como-funciona" },
@@ -10,8 +12,15 @@ const navLinks = [
   { label: "Preços", href: "#precos" },
 ];
 
+function handleCtaClick() {
+  trackEvent("cta_click", { location: "navbar", action: "signup" });
+  trackPixel("Lead");
+}
+
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const utmParams = useUtmParams();
+  const signupUrl = buildSignupUrl(undefined, utmParams);
 
   return (
     <nav
@@ -50,7 +59,7 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <Button variant="primary" href="https://gestao-leads-three.vercel.app/signup">
+          <Button variant="primary" href={signupUrl} onClick={handleCtaClick}>
             Testar grátis
           </Button>
         </div>
@@ -111,7 +120,7 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <Button variant="primary" href="https://gestao-leads-three.vercel.app/signup">
+              <Button variant="primary" href={signupUrl} onClick={handleCtaClick}>
                 Testar grátis
               </Button>
             </div>

@@ -40,7 +40,7 @@ export default function Button({
 
   if (href) {
     return (
-      <motion.a href={href} className={classes} {...motionProps}>
+      <motion.a href={href} className={classes} onClick={onClick} {...motionProps}>
         {children}
       </motion.a>
     );

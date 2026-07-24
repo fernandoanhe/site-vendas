@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import MouseGlow from "@/components/interactive/MouseGlow";
+import { useUtmParams } from "@/hooks/useUtmParams";
+import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
 
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -23,6 +25,9 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const utmParams = useUtmParams();
+  const signupUrl = buildSignupUrl(undefined, utmParams);
+
   return (
     <section className="relative overflow-hidden">
       {/* Ambient glow */}
@@ -74,7 +79,14 @@ export default function Hero() {
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           variants={fadeUp}
         >
-          <Button variant="primary" href="https://gestao-leads-three.vercel.app/signup">
+          <Button
+            variant="primary"
+            href={signupUrl}
+            onClick={() => {
+              trackEvent("cta_click", { location: "hero", action: "signup" });
+              trackPixel("Lead");
+            }}
+          >
             Quero testar grátis
           </Button>
           <Button variant="secondary" href="#como-funciona">

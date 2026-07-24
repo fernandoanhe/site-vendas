@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
+import { useUtmParams } from "@/hooks/useUtmParams";
+import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
 
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -21,7 +23,13 @@ const fadeUp = {
   },
 };
 
+const WA_DEMO_URL =
+  "https://wa.me/5518997362555?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20do%20Gest%C3%A3o%20de%20Leads.";
+
 export default function FinalCTA() {
+  const utmParams = useUtmParams();
+  const signupUrl = buildSignupUrl(undefined, utmParams);
+
   return (
     <section className="relative overflow-hidden py-24 md:py-36">
       {/* Ambient glow */}
@@ -69,10 +77,24 @@ export default function FinalCTA() {
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           variants={fadeUp}
         >
-          <Button variant="primary" href="https://gestao-leads-three.vercel.app/signup">
+          <Button
+            variant="primary"
+            href={signupUrl}
+            onClick={() => {
+              trackEvent("cta_click", { location: "final", action: "signup" });
+              trackPixel("Lead");
+            }}
+          >
             Começar teste grátis
           </Button>
-          <Button variant="secondary" href="https://wa.me/5518997362555?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20do%20Gest%C3%A3o%20de%20Leads.">
+          <Button
+            variant="secondary"
+            href={WA_DEMO_URL}
+            onClick={() => {
+              trackEvent("cta_click", { location: "final", action: "demo" });
+              trackPixel("Contact");
+            }}
+          >
             Agendar demonstração com um especialista
           </Button>
         </motion.div>

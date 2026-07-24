@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { instrumentSerif, inter, jetbrainsMono } from "@/lib/fonts";
 import MotionProvider from "@/components/ui/MotionProvider";
+import Analytics from "@/components/analytics/Analytics";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -42,6 +43,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen antialiased">
         <MotionProvider>{children}</MotionProvider>
+        <Analytics />
       </body>
     </html>
   );
