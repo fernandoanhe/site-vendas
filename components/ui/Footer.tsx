@@ -28,7 +28,7 @@ export default function Footer() {
           Gestão de Leads
         </a>
 
-        <nav className="flex items-center gap-6">
+        <nav aria-label="Links do rodapé" className="flex items-center gap-6">
           {navLinks.map((link) => (
             <a
               key={link.href}

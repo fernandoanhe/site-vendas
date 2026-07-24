@@ -24,6 +24,7 @@ export default function Navbar() {
 
   return (
     <nav
+      aria-label="Navegação principal"
       className="sticky top-0 z-50 border-b"
       style={{
         backgroundColor: "rgba(10, 10, 11, 0.8)",

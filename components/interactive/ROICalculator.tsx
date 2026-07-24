@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
+import { useUtmParams } from "@/hooks/useUtmParams";
+import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
 
 const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -27,6 +29,8 @@ export default function ROICalculator() {
   const [leads, setLeads] = useState(80);
   const [valorAvaliacao, setValorAvaliacao] = useState(300);
   const [leadsPerdidos, setLeadsPerdidos] = useState(15);
+  const utmParams = useUtmParams();
+  const signupUrl = buildSignupUrl(undefined, utmParams);
 
   const perdaMensal = valorAvaliacao * leadsPerdidos;
 
@@ -47,10 +51,10 @@ export default function ROICalculator() {
       </h3>
 
       <div className="mt-8 flex flex-col gap-8">
-        {/* Slider: Leads/mês */}
         <div>
           <div className="flex items-center justify-between mb-3">
             <label
+              htmlFor="roi-leads"
               className="text-sm"
               style={{ color: "var(--text-secondary)" }}
             >
@@ -67,6 +71,7 @@ export default function ROICalculator() {
             </span>
           </div>
           <input
+            id="roi-leads"
             type="range"
             min={20}
             max={500}
@@ -74,6 +79,9 @@ export default function ROICalculator() {
             value={leads}
             onChange={(e) => setLeads(Number(e.target.value))}
             className="w-full accent-[#F5B731] cursor-pointer"
+            aria-valuemin={20}
+            aria-valuemax={500}
+            aria-valuenow={leads}
           />
           <div
             className="flex justify-between text-xs mt-1"
@@ -84,10 +92,10 @@ export default function ROICalculator() {
           </div>
         </div>
 
-        {/* Slider: Valor/avaliação */}
         <div>
           <div className="flex items-center justify-between mb-3">
             <label
+              htmlFor="roi-valor"
               className="text-sm"
               style={{ color: "var(--text-secondary)" }}
             >
@@ -104,6 +112,7 @@ export default function ROICalculator() {
             </span>
           </div>
           <input
+            id="roi-valor"
             type="range"
             min={100}
             max={1000}
@@ -111,6 +120,9 @@ export default function ROICalculator() {
             value={valorAvaliacao}
             onChange={(e) => setValorAvaliacao(Number(e.target.value))}
             className="w-full accent-[#F5B731] cursor-pointer"
+            aria-valuemin={100}
+            aria-valuemax={1000}
+            aria-valuenow={valorAvaliacao}
           />
           <div
             className="flex justify-between text-xs mt-1"
@@ -121,10 +133,10 @@ export default function ROICalculator() {
           </div>
         </div>
 
-        {/* Slider: Leads perdidos */}
         <div>
           <div className="flex items-center justify-between mb-3">
             <label
+              htmlFor="roi-perdidos"
               className="text-sm"
               style={{ color: "var(--text-secondary)" }}
             >
@@ -141,6 +153,7 @@ export default function ROICalculator() {
             </span>
           </div>
           <input
+            id="roi-perdidos"
             type="range"
             min={5}
             max={50}
@@ -148,6 +161,9 @@ export default function ROICalculator() {
             value={leadsPerdidos}
             onChange={(e) => setLeadsPerdidos(Number(e.target.value))}
             className="w-full accent-[#F5B731] cursor-pointer"
+            aria-valuemin={5}
+            aria-valuemax={50}
+            aria-valuenow={leadsPerdidos}
           />
           <div
             className="flex justify-between text-xs mt-1"
@@ -163,6 +179,7 @@ export default function ROICalculator() {
       <div
         className="mt-10 rounded-xl p-6 text-center"
         style={{ backgroundColor: "var(--bg-surface)" }}
+        aria-live="polite"
       >
         <p
           className="text-lg"
@@ -194,7 +211,14 @@ export default function ROICalculator() {
       </div>
 
       <div className="mt-8 text-center">
-        <Button variant="primary" href="#testar">
+        <Button
+          variant="primary"
+          href={signupUrl}
+          onClick={() => {
+            trackEvent("cta_click", { location: "roi_calculator", action: "signup" });
+            trackPixel("Lead");
+          }}
+        >
           Quero parar de perder →
         </Button>
       </div>
