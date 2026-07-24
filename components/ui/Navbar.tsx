@@ -50,7 +50,7 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <Button variant="primary" href="#testar">
+          <Button variant="primary" href="https://gestao-leads-three.vercel.app/signup">
             Testar grátis
           </Button>
         </div>
@@ -111,7 +111,7 @@ export default function Navbar() {
                   {link.label}
                 </a>
               ))}
-              <Button variant="primary" href="#testar">
+              <Button variant="primary" href="https://gestao-leads-three.vercel.app/signup">
                 Testar grátis
               </Button>
             </div>

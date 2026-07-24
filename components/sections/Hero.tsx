@@ -74,7 +74,7 @@ export default function Hero() {
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           variants={fadeUp}
         >
-          <Button variant="primary" href="#testar">
+          <Button variant="primary" href="https://gestao-leads-three.vercel.app/signup">
             Quero testar grátis
           </Button>
           <Button variant="secondary" href="#como-funciona">

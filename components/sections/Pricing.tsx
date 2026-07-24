@@ -26,6 +26,7 @@ const fadeUp = {
 const plans = [
   {
     name: "Starter",
+    slug: "starter",
     price: "R$ 197",
     period: "/mês",
     highlight: false,
@@ -40,6 +41,7 @@ const plans = [
   },
   {
     name: "Pro",
+    slug: "pro",
     price: "R$ 397",
     period: "/mês",
     highlight: true,
@@ -56,6 +58,7 @@ const plans = [
   },
   {
     name: "Clínica+",
+    slug: "clinica_plus",
     price: "R$ 697",
     period: "/mês",
     highlight: false,
@@ -198,7 +201,7 @@ export default function Pricing() {
               <div className="mt-8">
                 <Button
                   variant={plan.highlight ? "primary" : "secondary"}
-                  href="#testar"
+                  href={`https://gestao-leads-three.vercel.app/signup?plano=${plan.slug}`}
                   className="w-full"
                 >
                   Começar teste grátis

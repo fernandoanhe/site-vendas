@@ -69,10 +69,10 @@ export default function FinalCTA() {
           className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           variants={fadeUp}
         >
-          <Button variant="primary" href="#testar">
+          <Button variant="primary" href="https://gestao-leads-three.vercel.app/signup">
             Começar teste grátis
           </Button>
-          <Button variant="secondary" href="#demo">
+          <Button variant="secondary" href="https://wa.me/5518997362555?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20demonstra%C3%A7%C3%A3o%20do%20Gest%C3%A3o%20de%20Leads.">
             Agendar demonstração com um especialista
           </Button>
         </motion.div>
