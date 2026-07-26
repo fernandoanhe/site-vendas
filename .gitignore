@@ -43,3 +43,5 @@ next-env.d.ts
 # screenshots (Playwright validation)
 *.png
 .playwright-mcp/
+
+.vercel

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import MouseGlow from "@/components/interactive/MouseGlow";
+import LightRays from "@/components/interactive/LightRays";
 import { useUtmParams } from "@/hooks/useUtmParams";
 import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
 
@@ -37,6 +38,8 @@ export default function Hero() {
           background: "var(--gradient-hero)",
         }}
       />
+
+      <LightRays />
 
       {/* Mouse follow glow */}
       <MouseGlow />
