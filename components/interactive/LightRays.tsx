@@ -3,11 +3,11 @@
 import { motion, useReducedMotion } from "framer-motion";
 
 const rays = [
-  { angle: 18, width: 180, left: "8%", opacity: 0.06, duration: 14, delay: 0 },
-  { angle: 24, width: 120, left: "25%", opacity: 0.05, duration: 16, delay: 3 },
-  { angle: 15, width: 220, left: "42%", opacity: 0.07, duration: 13, delay: 1.5 },
-  { angle: 28, width: 100, left: "60%", opacity: 0.04, duration: 18, delay: 5 },
-  { angle: 20, width: 160, left: "78%", opacity: 0.06, duration: 15, delay: 2.5 },
+  { angle: 18, width: 180, left: "8%", opacity: 0.14, duration: 14, delay: 0 },
+  { angle: 24, width: 120, left: "25%", opacity: 0.12, duration: 16, delay: 3 },
+  { angle: 15, width: 220, left: "42%", opacity: 0.18, duration: 13, delay: 1.5 },
+  { angle: 28, width: 100, left: "60%", opacity: 0.10, duration: 18, delay: 5 },
+  { angle: 20, width: 160, left: "78%", opacity: 0.14, duration: 15, delay: 2.5 },
 ];
 
 export default function LightRays() {
@@ -24,7 +24,7 @@ export default function LightRays() {
             width: ray.width,
             height: "140%",
             background: `linear-gradient(180deg, rgba(245, 183, 49, ${ray.opacity + 0.02}) 0%, rgba(245, 183, 49, ${ray.opacity}) 40%, transparent 100%)`,
-            filter: "blur(60px)",
+            filter: "blur(40px)",
             transform: `rotate(${ray.angle}deg)`,
             transformOrigin: "top center",
           }}
