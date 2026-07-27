@@ -1,5 +1,6 @@
 import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
+import HeroVideo from "@/components/sections/HeroVideo";
 import PainPoints from "@/components/sections/PainPoints";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Features from "@/components/sections/Features";
@@ -16,6 +17,7 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
+        <HeroVideo />
         <PainPoints />
         <HowItWorks />
         <Features />
