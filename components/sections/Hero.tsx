@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import MouseGlow from "@/components/interactive/MouseGlow";
 import DotGrid from "@/components/interactive/DotGrid";
-import FloatingCards from "@/components/interactive/FloatingCards";
 import { useUtmParams } from "@/hooks/useUtmParams";
 import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
 
@@ -44,8 +43,6 @@ export default function Hero() {
 
       {/* Mouse follow glow */}
       <MouseGlow />
-
-      <FloatingCards />
 
       <motion.div
         className="relative z-10 mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28 text-center"
