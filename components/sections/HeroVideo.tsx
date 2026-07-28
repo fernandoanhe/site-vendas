@@ -1,94 +1,76 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+
+const ease = [0.25, 0.46, 0.45, 0.94] as const;
 
 export default function HeroVideo() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.3 });
 
-  const handleScroll = useCallback(() => {
-    const section = sectionRef.current;
-    const video = videoRef.current;
-    if (!section || !video || !video.duration) return;
-
-    const rect = section.getBoundingClientRect();
-    const sectionHeight = section.offsetHeight - window.innerHeight;
-    if (sectionHeight <= 0) return;
-
-    const scrolled = -rect.top;
-    const progress = Math.min(Math.max(scrolled / sectionHeight, 0), 1);
-    video.currentTime = progress * video.duration;
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+  if (isInView && videoRef.current?.paused) {
+    videoRef.current.play().catch(() => {});
+  }
 
   return (
     <section
       ref={sectionRef}
       style={{
         background: "var(--bg-primary)",
-        minHeight: "150vh",
-        position: "relative",
+        padding: "5rem 0",
       }}
     >
       <div
-        style={{
-          position: "sticky",
-          top: 0,
-          height: "100vh",
-          display: "flex",
-          alignItems: "center",
-        }}
+        className="mx-auto w-full px-4 sm:px-6"
+        style={{ maxWidth: "var(--max-width)" }}
       >
         <div
-          className="mx-auto w-full px-4 sm:px-6"
-          style={{ maxWidth: "var(--max-width)" }}
+          className="hero-video-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "2rem",
+            alignItems: "center",
+          }}
         >
+          <div className="hero-video-left" />
+
           <div
-            className="hero-video-grid"
+            className="hero-video-right"
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: "2rem",
-              alignItems: "center",
+              display: "flex",
+              justifyContent: "flex-end",
             }}
           >
-            <div className="hero-video-left" />
-
-            <div
-              className="hero-video-right"
+            <motion.div
+              initial={{ opacity: 0, x: -60 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -60 }}
+              transition={{ duration: 0.8, ease }}
               style={{
-                display: "flex",
-                justifyContent: "flex-end",
+                maxWidth: "500px",
+                width: "100%",
+                borderRadius: "16px",
+                border: "1px solid rgba(245, 183, 49, 0.15)",
+                boxShadow: "0 0 30px rgba(245, 183, 49, 0.06)",
+                overflow: "hidden",
               }}
             >
-              <div
+              <video
+                ref={videoRef}
+                src="/hero-animation.mp4"
+                muted
+                loop
+                playsInline
+                preload="auto"
                 style={{
-                  maxWidth: "500px",
+                  display: "block",
                   width: "100%",
-                  borderRadius: "16px",
-                  border: "1px solid rgba(245, 183, 49, 0.15)",
-                  boxShadow: "0 0 30px rgba(245, 183, 49, 0.06)",
-                  overflow: "hidden",
+                  height: "auto",
                 }}
-              >
-                <video
-                  ref={videoRef}
-                  src="/hero-animation.mp4"
-                  muted
-                  playsInline
-                  preload="auto"
-                  style={{
-                    display: "block",
-                    width: "100%",
-                    height: "auto",
-                  }}
-                />
-              </div>
-            </div>
+              />
+            </motion.div>
           </div>
         </div>
       </div>
