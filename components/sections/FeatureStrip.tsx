@@ -21,10 +21,34 @@ const fadeUp = {
 };
 
 const items = [
-  { icon: "⭐", label: "Scoring Inteligente" },
-  { icon: "💬", label: "Chat WhatsApp" },
-  { icon: "📊", label: "Dashboard Completo" },
-  { icon: "🛡️", label: "Proteção de Número" },
+  {
+    label: "Dashboard Inteligente",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="3" width="7" height="9" rx="1" />
+        <rect x="14" y="3" width="7" height="5" rx="1" />
+        <rect x="14" y="12" width="7" height="9" rx="1" />
+        <rect x="3" y="16" width="7" height="5" rx="1" />
+      </svg>
+    ),
+  },
+  {
+    label: "WhatsApp como Motor de Vendas",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z" />
+      </svg>
+    ),
+  },
+  {
+    label: "Proteção Total do Número",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+        <path d="m9 12 2 2 4-4" />
+      </svg>
+    ),
+  },
 ];
 
 export default function FeatureStrip() {
@@ -43,32 +67,36 @@ export default function FeatureStrip() {
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
       >
-        <div className="grid grid-cols-2 gap-8 sm:gap-12 lg:grid-cols-4">
+        <div
+          className="flex flex-col sm:flex-row items-center justify-center"
+          style={{ gap: "4rem" }}
+        >
           {items.map((item) => (
             <motion.div
               key={item.label}
-              className="flex flex-col items-center gap-3"
+              className="flex flex-col items-center"
+              style={{ gap: "12px" }}
               variants={fadeUp}
             >
               <div
                 style={{
-                  width: "48px",
-                  height: "48px",
+                  width: "56px",
+                  height: "56px",
                   borderRadius: "50%",
-                  border: "1px solid rgba(245, 183, 49, 0.3)",
+                  backgroundColor: "var(--bg-elevated)",
+                  color: "#C9C9C9",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: "20px",
                 }}
               >
                 {item.icon}
               </div>
               <span
                 style={{
-                  fontSize: "14px",
+                  fontSize: "15px",
                   fontWeight: 500,
-                  color: "var(--text-secondary)",
+                  color: "var(--text-primary)",
                   textAlign: "center",
                 }}
               >
