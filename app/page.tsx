@@ -1,5 +1,6 @@
 import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
+import FeatureStrip from "@/components/sections/FeatureStrip";
 import PainPoints from "@/components/sections/PainPoints";
 import HowItWorks from "@/components/sections/HowItWorks";
 import Features from "@/components/sections/Features";
@@ -16,8 +17,9 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <PainPoints />
+        <FeatureStrip />
         <HowItWorks />
+        <PainPoints />
         <Features />
         <Comparison />
         <SocialProof />
