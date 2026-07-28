@@ -95,3 +95,15 @@ body {
   background-color: rgba(245, 183, 49, 0.3);
   color: var(--text-primary);
 }
+
+@media (max-width: 768px) {
+  .hero-video-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .hero-video-left {
+    display: none !important;
+  }
+  .hero-video-right {
+    justify-content: center !important;
+  }
+}

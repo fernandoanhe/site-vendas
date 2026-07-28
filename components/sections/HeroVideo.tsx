@@ -1,94 +1,97 @@
 "use client";
 
-import { useRef, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
-
-const ease = [0.25, 0.46, 0.45, 0.94] as const;
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease },
-  },
-};
+import { useRef, useEffect, useCallback } from "react";
 
 export default function HeroVideo() {
+  const sectionRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.3 });
+
+  const handleScroll = useCallback(() => {
+    const section = sectionRef.current;
+    const video = videoRef.current;
+    if (!section || !video || !video.duration) return;
+
+    const rect = section.getBoundingClientRect();
+    const sectionHeight = section.offsetHeight - window.innerHeight;
+    if (sectionHeight <= 0) return;
+
+    const scrolled = -rect.top;
+    const progress = Math.min(Math.max(scrolled / sectionHeight, 0), 1);
+    video.currentTime = progress * video.duration;
+  }, []);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (isInView) {
-      video.play().catch(() => {});
-    } else {
-      video.pause();
-    }
-  }, [isInView]);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
 
   return (
     <section
-      className="relative overflow-hidden"
+      ref={sectionRef}
       style={{
         background: "var(--bg-primary)",
-        padding: "4rem 0",
+        minHeight: "150vh",
+        position: "relative",
       }}
     >
-      {/* Top fade */}
       <div
-        className="pointer-events-none absolute top-0 left-0 right-0 z-10"
         style={{
-          height: "80px",
-          background:
-            "linear-gradient(to bottom, var(--bg-primary), transparent)",
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          display: "flex",
+          alignItems: "center",
         }}
-      />
-
-      {/* Bottom fade */}
-      <div
-        className="pointer-events-none absolute bottom-0 left-0 right-0 z-10"
-        style={{
-          height: "80px",
-          background:
-            "linear-gradient(to top, var(--bg-primary), transparent)",
-        }}
-      />
-
-      <motion.div
-        ref={containerRef}
-        className="relative z-0 mx-auto px-4 sm:px-6"
-        style={{ maxWidth: "900px" }}
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
       >
         <div
-          style={{
-            borderRadius: "16px",
-            border: "1px solid rgba(245, 183, 49, 0.15)",
-            boxShadow: "0 0 40px rgba(245, 183, 49, 0.08)",
-            overflow: "hidden",
-          }}
+          className="mx-auto w-full px-4 sm:px-6"
+          style={{ maxWidth: "var(--max-width)" }}
         >
-          <video
-            ref={videoRef}
-            src="/hero-animation.mp4"
-            muted
-            loop
-            playsInline
-            preload="metadata"
+          <div
+            className="hero-video-grid"
             style={{
-              display: "block",
-              width: "100%",
-              height: "auto",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "2rem",
+              alignItems: "center",
             }}
-          />
+          >
+            <div className="hero-video-left" />
+
+            <div
+              className="hero-video-right"
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <div
+                style={{
+                  maxWidth: "500px",
+                  width: "100%",
+                  borderRadius: "16px",
+                  border: "1px solid rgba(245, 183, 49, 0.15)",
+                  boxShadow: "0 0 30px rgba(245, 183, 49, 0.06)",
+                  overflow: "hidden",
+                }}
+              >
+                <video
+                  ref={videoRef}
+                  src="/hero-animation.mp4"
+                  muted
+                  playsInline
+                  preload="auto"
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    height: "auto",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
