@@ -14,7 +14,10 @@ export function useUtmParams(): URLSearchParams {
       const val = current.get(key);
       if (val) utm.set(key, val);
     }
-    if (utm.toString()) setUtmParams(utm);
+    if (utm.toString()) {
+      const frame = requestAnimationFrame(() => setUtmParams(utm));
+      return () => cancelAnimationFrame(frame);
+    }
   }, []);
 
   return utmParams;

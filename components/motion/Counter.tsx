@@ -26,8 +26,8 @@ export default function Counter({
   useEffect(() => {
     if (!isInView) return;
     if (prefersReduced) {
-      setValue(target);
-      return;
+      const frame = requestAnimationFrame(() => setValue(target));
+      return () => cancelAnimationFrame(frame);
     }
     const startTime = performance.now();
     const tick = (now: number) => {

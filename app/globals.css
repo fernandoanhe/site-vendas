@@ -96,6 +96,11 @@ body {
   color: var(--text-primary);
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent-400);
+  outline-offset: 2px;
+}
+
 .hero-gold-text {
   background: linear-gradient(90deg, #F5B731 0%, #D4960A 40%, #F5B731 80%, #D4960A 100%);
   background-size: 200% 100%;

@@ -26,7 +26,8 @@ export async function submitDemoLead(formData: FormData) {
     return { ok: false, errors: result.error.flatten().fieldErrors };
   }
 
-  const { _hp: _, ...lead } = result.data;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { _hp: _honeypot, ...lead } = result.data;
   await capturarLeadDemo(lead);
   return { ok: true, errors: null };
 }

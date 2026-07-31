@@ -28,7 +28,8 @@ export default function Demo() {
 
   useEffect(() => {
     if (typeof window !== "undefined" && localStorage.getItem("clinvex_demo_unlocked")) {
-      setUnlocked(true);
+      const frame = requestAnimationFrame(() => setUnlocked(true));
+      return () => cancelAnimationFrame(frame);
     }
   }, []);
 

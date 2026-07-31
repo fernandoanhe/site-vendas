@@ -28,8 +28,8 @@ function useCounter(target: number, isInView: boolean, skipAnimation: boolean, d
   useEffect(() => {
     if (!isInView) return;
     if (skipAnimation) {
-      setValue(target);
-      return;
+      const frame = requestAnimationFrame(() => setValue(target));
+      return () => cancelAnimationFrame(frame);
     }
     const startTime = performance.now();
 

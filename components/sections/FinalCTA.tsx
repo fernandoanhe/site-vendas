@@ -56,6 +56,7 @@ function CoolingTimer() {
 export default function FinalCTA() {
   const utmParams = useUtmParams();
   const signupUrl = buildSignupUrl(undefined, utmParams);
+  const prefersReduced = useReducedMotion();
 
   return (
     <section className="relative overflow-hidden py-24 md:py-36">
@@ -73,8 +74,8 @@ export default function FinalCTA() {
           borderRadius: "50%",
           background: "radial-gradient(circle, rgba(245,183,49,0.08) 0%, transparent 70%)",
         }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        animate={prefersReduced ? {} : { scale: [1, 1.15, 1], opacity: [0.6, 1, 0.6] }}
+        transition={prefersReduced ? {} : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
 
       <motion.div
