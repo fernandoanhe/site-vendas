@@ -1,11 +1,9 @@
 import Navbar from "@/components/ui/Navbar";
 import Hero from "@/components/sections/Hero";
-import FeatureStrip from "@/components/sections/FeatureStrip";
-import PainPoints from "@/components/sections/PainPoints";
-import HowItWorks from "@/components/sections/HowItWorks";
-import Features from "@/components/sections/Features";
-import Comparison from "@/components/sections/Comparison";
-import SocialProof from "@/components/sections/SocialProof";
+import Jornada from "@/components/sections/Jornada";
+import Demo from "@/components/sections/Demo";
+import Ecossistema from "@/components/sections/Ecossistema";
+import Vantagens from "@/components/sections/Vantagens";
 import Pricing from "@/components/sections/Pricing";
 import FAQ from "@/components/sections/FAQ";
 import FinalCTA from "@/components/sections/FinalCTA";
@@ -17,12 +15,10 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <FeatureStrip />
-        <HowItWorks />
-        <PainPoints />
-        <Features />
-        <Comparison />
-        <SocialProof />
+        <Jornada />
+        <Demo />
+        <Ecossistema />
+        <Vantagens />
         <Pricing />
         <FAQ />
         <FinalCTA />

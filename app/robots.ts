@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://gestaodeleads.com.br/sitemap.xml",
+    sitemap: "https://clinvex.com.br/sitemap.xml",
   };
 }

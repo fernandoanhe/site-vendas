@@ -95,3 +95,40 @@ body {
   background-color: rgba(245, 183, 49, 0.3);
   color: var(--text-primary);
 }
+
+.hero-gold-text {
+  background: linear-gradient(90deg, #F5B731 0%, #D4960A 40%, #F5B731 80%, #D4960A 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-sweep 6s linear infinite;
+}
+
+@keyframes gold-sweep {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gold-text {
+    animation: none;
+    background-position: 0% 50%;
+  }
+}
+
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-border {
+  to { --border-angle: 360deg; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes rotate-border {
+    to { --border-angle: 0deg; }
+  }
+}

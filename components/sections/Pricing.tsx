@@ -6,23 +6,11 @@ import Button from "@/components/ui/Button";
 import ROICalculator from "@/components/interactive/ROICalculator";
 import { useUtmParams } from "@/hooks/useUtmParams";
 import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
-
-const ease = [0.25, 0.46, 0.45, 0.94] as const;
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-};
+import { ease, duration, stagger } from "@/lib/motion";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease },
-  },
+  visible: { opacity: 1, y: 0, transition: { duration, ease } },
 };
 
 const plans = [
@@ -33,11 +21,12 @@ const plans = [
     period: "/mês",
     highlight: false,
     features: [
-      "Até 500 contatos gerenciados",
+      "Até 500 contatos",
       "1.000 disparos/mês",
-      "3 sequências de automação",
+      "2 membros da equipe",
       "Dashboard básico",
-      "Scoring de leads",
+      "Scoring de contatos",
+      "Chat centralizado",
       "Suporte via chat",
     ],
   },
@@ -49,12 +38,13 @@ const plans = [
     highlight: true,
     badge: "Mais popular",
     features: [
-      "Até 2.000 contatos gerenciados",
+      "Até 2.000 contatos",
       "5.000 disparos/mês",
-      "Automações ilimitadas",
+      "5 membros da equipe",
       "Dashboard completo",
-      "Scoring de leads",
-      "Health score de contatos",
+      "Scoring + health score",
+      "Chat + automação",
+      "Listas inteligentes",
       "Suporte via chat + call",
     ],
   },
@@ -67,10 +57,11 @@ const plans = [
     features: [
       "Contatos ilimitados",
       "Disparos ilimitados",
-      "Automações ilimitadas",
+      "Membros ilimitados",
       "Dashboard completo + API",
-      "Scoring de leads",
-      "Health score de contatos",
+      "Scoring + health score",
+      "Todas as automações",
+      "Listas inteligentes",
       "Suporte dedicado",
     ],
   },
@@ -81,14 +72,14 @@ export default function Pricing() {
 
   return (
     <section
-      id="precos"
+      id="planos"
       className="py-20 md:py-32"
       style={{ backgroundColor: "var(--bg-primary)" }}
     >
       <motion.div
         className="mx-auto px-6"
         style={{ maxWidth: "var(--max-width)" }}
-        variants={containerVariants}
+        variants={stagger(0.12)}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -107,21 +98,8 @@ export default function Pricing() {
           }}
           variants={fadeUp}
         >
-          Quanto custa perder 5 leads por mês?
+          Planos da plataforma
         </motion.h2>
-
-        <motion.p
-          className="mt-4 max-w-2xl text-lg"
-          style={{
-            color: "var(--text-secondary)",
-            lineHeight: 1.6,
-          }}
-          variants={fadeUp}
-        >
-          Se cada avaliação agendada vale R$300-500 e você perde pelo menos 5
-          leads por mês por demora ou falta de follow-up — são R$1.500 a R$2.500
-          evaporando. A plataforma se paga no primeiro lead salvo.
-        </motion.p>
 
         {/* ROI Calculator */}
         <div className="mt-12">
@@ -130,21 +108,51 @@ export default function Pricing() {
 
         {/* Pricing cards */}
         <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {plans.map((plan) => (
+          {plans.map((plan, i) => (
             <motion.div
               key={plan.name}
               className="relative rounded-2xl border p-8 flex flex-col"
               style={{
                 backgroundColor: "var(--bg-secondary)",
                 borderColor: plan.highlight
-                  ? "var(--border-accent)"
+                  ? "transparent"
                   : "var(--border-default)",
+                backgroundClip: "padding-box",
                 boxShadow: plan.highlight
                   ? "0 0 40px rgba(245, 183, 49, 0.08)"
                   : "none",
+                overflow: "hidden",
               }}
-              variants={fadeUp}
+              variants={{
+                hidden: { opacity: 0, x: i === 0 ? -30 : i === 2 ? 30 : 0, y: i === 1 ? 24 : 0 },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                  transition: { duration: 0.6, ease, delay: i * 0.1 },
+                },
+              }}
+              whileHover={{
+                rotateX: plan.highlight ? 0 : 2,
+                rotateY: plan.highlight ? 0 : (i === 0 ? 3 : -3),
+                transition: { duration: 0.3 },
+              }}
             >
+              {/* Rotating gradient border for Pro */}
+              {plan.highlight && (
+                <div
+                  className="absolute inset-0 rounded-2xl pointer-events-none"
+                  style={{
+                    padding: "1px",
+                    background: "conic-gradient(from var(--border-angle, 0deg), var(--accent-400), var(--accent-500), var(--accent-400))",
+                    WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                    animation: "rotate-border 4s linear infinite",
+                  }}
+                />
+              )}
+
               {plan.badge && (
                 <span
                   className="absolute -top-3 left-6 rounded-full px-3 py-1 text-xs font-medium"
@@ -169,17 +177,12 @@ export default function Pricing() {
                   className="text-4xl font-bold"
                   style={{
                     fontFamily: "var(--font-mono)",
-                    color: plan.highlight
-                      ? "var(--accent-400)"
-                      : "var(--text-primary)",
+                    color: plan.highlight ? "var(--accent-400)" : "var(--text-primary)",
                   }}
                 >
                   {plan.price}
                 </span>
-                <span
-                  className="text-sm"
-                  style={{ color: "var(--text-muted)" }}
-                >
+                <span className="text-sm" style={{ color: "var(--text-muted)" }}>
                   {plan.period}
                 </span>
               </div>
@@ -191,12 +194,7 @@ export default function Pricing() {
                     className="flex items-start gap-2.5 text-sm"
                     style={{ color: "var(--text-secondary)" }}
                   >
-                    <span
-                      className="mt-0.5 shrink-0"
-                      style={{ color: "var(--success)" }}
-                    >
-                      ✓
-                    </span>
+                    <span className="mt-0.5 shrink-0" style={{ color: "var(--success)" }}>✓</span>
                     {feature}
                   </li>
                 ))}
@@ -208,28 +206,20 @@ export default function Pricing() {
                   href={buildSignupUrl(plan.slug, utmParams)}
                   className="w-full"
                   onClick={() => {
-                    trackEvent("cta_click", {
-                      location: "pricing",
-                      action: "signup",
-                      plan: plan.slug,
-                    });
+                    trackEvent("cta_click", { location: "pricing", action: "signup", plan: plan.slug });
                     trackPixel("Lead");
                   }}
                 >
                   Começar teste grátis
                 </Button>
               </div>
+
+              <p className="mt-3 text-center text-xs" style={{ color: "var(--text-muted)" }}>
+                14 dias grátis · Sem cartão · Sem fidelidade
+              </p>
             </motion.div>
           ))}
         </div>
-
-        <motion.p
-          className="mt-8 text-center text-sm"
-          style={{ color: "var(--text-muted)" }}
-          variants={fadeUp}
-        >
-          Sem fidelidade. Cancele quando quiser. Sem taxa de setup.
-        </motion.p>
       </motion.div>
     </section>
   );

@@ -206,7 +206,7 @@ export default function ROICalculator() {
           className="text-sm mt-3"
           style={{ color: "var(--text-muted)" }}
         >
-          Com a plataforma, clínicas recuperam em média 60-70% desses leads.
+          Com a Clinvex, clínicas recuperam em média 60-70% desses contatos.
         </p>
       </div>
 

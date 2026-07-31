@@ -4,31 +4,18 @@ import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
 import MouseGlow from "@/components/interactive/MouseGlow";
 import DotGrid from "@/components/interactive/DotGrid";
+import Particles from "@/components/interactive/Particles";
+import WordReveal from "@/components/motion/WordReveal";
 import { useUtmParams } from "@/hooks/useUtmParams";
 import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
-
-const ease = [0.25, 0.46, 0.45, 0.94] as const;
-
-const staggerContainer = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-};
-
-const headlineStagger = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12 },
-  },
-};
+import { ease, duration, stagger } from "@/lib/motion";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease },
+    transition: { duration, ease },
   },
 };
 
@@ -38,26 +25,30 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden">
-      {/* Ambient glow */}
       <div
         className="pointer-events-none absolute inset-0 z-0"
-        style={{
-          background: "var(--gradient-hero)",
-        }}
+        style={{ background: "var(--gradient-hero)" }}
       />
 
       <DotGrid />
-
-      {/* Mouse follow glow */}
       <MouseGlow />
+      <Particles />
 
       <motion.div
-        className="relative z-10 mx-auto px-6 pt-24 pb-20 md:pt-32 md:pb-28 text-center"
+        className="relative z-10 mx-auto px-6 pt-28 pb-24 md:pt-36 md:pb-32 text-center"
         style={{ maxWidth: "var(--max-width)" }}
-        variants={staggerContainer}
+        variants={stagger(0.15)}
         initial="hidden"
         animate="visible"
       >
+        <motion.p
+          className="text-xs font-medium uppercase tracking-[0.2em] mb-6"
+          style={{ color: "var(--accent-400)" }}
+          variants={fadeUp}
+        >
+          Plataforma WhatsApp-first para clínicas de alto ticket
+        </motion.p>
+
         <motion.h1
           className="mx-auto max-w-4xl text-4xl md:text-5xl lg:text-7xl"
           style={{
@@ -66,18 +57,30 @@ export default function Hero() {
             letterSpacing: "var(--tracking-tight)",
             lineHeight: 1.1,
           }}
-          variants={headlineStagger}
+          variants={fadeUp}
         >
-          <motion.span className="block" variants={fadeUp}>
-            Atendimento é
-          </motion.span>
-          <motion.span
-            className="block"
-            style={{ color: "var(--accent-400)" }}
-            variants={fadeUp}
-          >
-            Ciência de Dados.
-          </motion.span>
+          <WordReveal
+            text="Gestão Comercial é Ciência de Dados"
+            stagger={0.06}
+            renderWord={(word, i) => {
+              const goldWords = ["Ciência", "de", "Dados"];
+              const isGold = goldWords.includes(word);
+              if (isGold) {
+                return (
+                  <span className="hero-gold-text">
+                    {word}
+                    {i < 5 && " "}
+                  </span>
+                );
+              }
+              return (
+                <>
+                  {word}
+                  {i < 5 && " "}
+                </>
+              );
+            }}
+          />
         </motion.h1>
 
         <motion.p
@@ -105,10 +108,10 @@ export default function Hero() {
               trackPixel("Lead");
             }}
           >
-            Testar grátis
+            Testar grátis por 14 dias
           </Button>
-          <Button variant="secondary" href="#como-funciona">
-            A experiência ↓
+          <Button variant="secondary" href="#demo">
+            Ver a plataforma por dentro ↓
           </Button>
         </motion.div>
 
@@ -117,8 +120,48 @@ export default function Hero() {
           style={{ color: "var(--text-muted)" }}
           variants={fadeUp}
         >
-          Grátis por 14 dias. Sem cartão. Sem compromisso.
+          Sem cartão de crédito. Configuração em 10 minutos.
         </motion.p>
+
+        <motion.div
+          className="mt-16 flex justify-center"
+          variants={fadeUp}
+        >
+          <motion.div
+            className="flex flex-col items-center gap-2"
+            animate={{ y: [0, 6, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <span className="text-xs" style={{ color: "var(--text-muted)" }}>
+              Scroll
+            </span>
+            <svg
+              width="16"
+              height="24"
+              viewBox="0 0 16 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <rect
+                x="1"
+                y="1"
+                width="14"
+                height="22"
+                rx="7"
+                stroke="var(--text-muted)"
+                strokeWidth="1.5"
+              />
+              <motion.circle
+                cx="8"
+                cy="8"
+                r="2"
+                fill="var(--accent-400)"
+                animate={{ cy: [8, 14, 8] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </svg>
+          </motion.div>
+        </motion.div>
       </motion.div>
     </section>
   );

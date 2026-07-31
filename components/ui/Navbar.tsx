@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Button from "./Button";
 import { useUtmParams } from "@/hooks/useUtmParams";
 import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
 
 const navLinks = [
-  { label: "Como funciona", href: "#como-funciona" },
-  { label: "Funcionalidades", href: "#funcionalidades" },
-  { label: "Preços", href: "#precos" },
+  { label: "Jornada", href: "#jornada" },
+  { label: "Plataforma", href: "#plataforma" },
+  { label: "Vantagens", href: "#vantagens" },
+  { label: "Planos", href: "#planos" },
+  { label: "FAQ", href: "#faq" },
 ];
 
 function handleCtaClick() {
@@ -19,18 +21,25 @@ function handleCtaClick() {
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const utmParams = useUtmParams();
   const signupUrl = buildSignupUrl(undefined, utmParams);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <nav
       aria-label="Navegação principal"
-      className="sticky top-0 z-50 border-b"
+      className="sticky top-0 z-50 transition-[border-color] duration-300"
       style={{
         backgroundColor: "rgba(10, 10, 11, 0.8)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
-        borderColor: "var(--border-default)",
+        borderBottom: `1px solid ${scrolled ? "rgba(245, 183, 49, 0.15)" : "var(--border-default)"}`,
       }}
     >
       <div
@@ -39,16 +48,15 @@ export default function Navbar() {
       >
         <a
           href="#"
-          className="text-lg font-semibold"
+          className="text-xl font-semibold"
           style={{
             fontFamily: "var(--font-display)",
             color: "var(--text-primary)",
           }}
         >
-          Gestão de Leads
+          Clinvex
         </a>
 
-        {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
@@ -65,11 +73,11 @@ export default function Navbar() {
           </Button>
         </div>
 
-        {/* Mobile hamburger */}
         <button
           className="md:hidden flex flex-col gap-1.5 p-2 cursor-pointer"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
+          aria-expanded={mobileOpen}
         >
           <span
             className="block w-5 h-0.5 transition-transform"
@@ -95,15 +103,14 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="md:hidden overflow-hidden border-t"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden border-t"
             style={{
               borderColor: "var(--border-default)",
               backgroundColor: "rgba(10, 10, 11, 0.95)",

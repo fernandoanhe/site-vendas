@@ -5,25 +5,25 @@ import Analytics from "@/components/analytics/Analytics";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Gestão de Leads — WhatsApp Inteligente para Clínicas de Estética",
+  title: "Clinvex — Gestão Comercial WhatsApp-First para Clínicas de Alto Ticket",
   description:
-    "Transforme o WhatsApp da sua clínica de estética em uma máquina de conversão. Scoring de leads, disparos seguros, follow-up automático. Teste grátis 14 dias.",
+    "O primeiro instrumento de precisão para triagem e conversão via WhatsApp desenhado para clínicas de alto ticket. Scoring, disparos seguros, follow-up automático. Teste grátis 14 dias.",
   keywords:
-    "gestão leads WhatsApp, clínica estética, CRM WhatsApp estética, disparo WhatsApp seguro, scoring leads",
-  metadataBase: new URL("https://gestaodeleads.com.br"),
+    "gestão comercial WhatsApp, clínica estética, Clinvex, CRM WhatsApp estética, disparo WhatsApp seguro, scoring contatos",
+  metadataBase: new URL("https://clinvex.com.br"),
   openGraph: {
-    title: "Pare de perder os leads que você pagou pra captar.",
+    title: "Clinvex — Gestão Comercial é Ciência de Dados",
     description:
-      "A plataforma WhatsApp-first para clínicas de estética. Scoring, disparos seguros e follow-up automático.",
+      "O primeiro instrumento de precisão para triagem e conversão via WhatsApp desenhado para clínicas de alto ticket.",
     type: "website",
     locale: "pt_BR",
-    siteName: "Gestão de Leads",
+    siteName: "Clinvex",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pare de perder os leads que você pagou pra captar.",
+    title: "Clinvex — Gestão Comercial é Ciência de Dados",
     description:
-      "A plataforma WhatsApp-first para clínicas de estética. Scoring, disparos seguros e follow-up automático.",
+      "O primeiro instrumento de precisão para triagem e conversão via WhatsApp desenhado para clínicas de alto ticket.",
   },
   robots: {
     index: true,

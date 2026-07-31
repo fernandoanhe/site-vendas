@@ -17,7 +17,7 @@ export function trackPixel(event: string, params?: Record<string, string>) {
   }
 }
 
-const APP_URL = "https://gestao-leads-three.vercel.app";
+const APP_URL = "https://app.clinvex.com.br";
 
 export function buildSignupUrl(
   plano?: string,
