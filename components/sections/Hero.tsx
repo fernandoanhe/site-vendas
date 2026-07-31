@@ -52,7 +52,7 @@ export default function Hero() {
         animate="visible"
       >
         <motion.h1
-          className="mx-auto max-w-4xl text-4xl md:text-5xl lg:text-7xl"
+          className="mx-auto max-w-4xl text-4xl md:text-5xl lg:text-7xl whitespace-pre-line"
           style={{
             fontFamily: "var(--font-display)",
             color: "var(--text-primary)",
@@ -61,7 +61,7 @@ export default function Hero() {
           }}
           variants={fadeUp}
         >
-          Pare de perder os leads que você pagou pra captar.
+          Atendimento é{"\n"}Ciência de Dados.
         </motion.h1>
 
         <motion.p
@@ -73,9 +73,8 @@ export default function Hero() {
           }}
           variants={fadeUp}
         >
-          O WhatsApp da sua clínica de estética vira uma máquina de conversão
-          — com scoring inteligente, follow-up automático e disparos que
-          protegem seu número.
+          O primeiro instrumento de precisão para triagem e conversão via
+          WhatsApp desenhado para clínicas de alto ticket.
         </motion.p>
 
         <motion.div
@@ -90,10 +89,10 @@ export default function Hero() {
               trackPixel("Lead");
             }}
           >
-            Quero testar grátis
+            Testar grátis
           </Button>
           <Button variant="secondary" href="#como-funciona">
-            Ver funcionando agora ↓
+            A experiência ↓
           </Button>
         </motion.div>
 
