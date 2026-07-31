@@ -16,6 +16,13 @@ const staggerContainer = {
   },
 };
 
+const headlineStagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
 const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: {
@@ -52,16 +59,25 @@ export default function Hero() {
         animate="visible"
       >
         <motion.h1
-          className="mx-auto max-w-4xl text-4xl md:text-5xl lg:text-7xl whitespace-pre-line"
+          className="mx-auto max-w-4xl text-4xl md:text-5xl lg:text-7xl"
           style={{
             fontFamily: "var(--font-display)",
             color: "var(--text-primary)",
             letterSpacing: "var(--tracking-tight)",
             lineHeight: 1.1,
           }}
-          variants={fadeUp}
+          variants={headlineStagger}
         >
-          Atendimento é{"\n"}Ciência de Dados.
+          <motion.span className="block" variants={fadeUp}>
+            Atendimento é
+          </motion.span>
+          <motion.span
+            className="block"
+            style={{ color: "var(--accent-400)" }}
+            variants={fadeUp}
+          >
+            Ciência de Dados.
+          </motion.span>
         </motion.h1>
 
         <motion.p
