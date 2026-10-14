@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import Button from "@/components/ui/Button";
+import DemoFormModal from "@/components/ui/DemoFormModal";
 import MouseGlow from "@/components/interactive/MouseGlow";
 import DotGrid from "@/components/interactive/DotGrid";
 import Particles from "@/components/interactive/Particles";
@@ -20,6 +22,7 @@ const fadeUp = {
 };
 
 export default function Hero() {
+  const [demoOpen, setDemoOpen] = useState(false);
   const utmParams = useUtmParams();
   const signupUrl = buildSignupUrl(undefined, utmParams);
 
@@ -113,7 +116,17 @@ export default function Hero() {
           <Button variant="secondary" href="#demo">
             Ver a plataforma por dentro ↓
           </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setDemoOpen(true);
+              trackEvent("cta_click", { location: "hero", action: "demo_form" });
+            }}
+          >
+            Solicitar demonstração
+          </Button>
         </motion.div>
+        <DemoFormModal open={demoOpen} onClose={() => setDemoOpen(false)} />
 
         <motion.p
           className="mt-6 text-sm"

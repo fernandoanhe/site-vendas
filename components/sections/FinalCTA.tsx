@@ -3,6 +3,7 @@
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Button from "@/components/ui/Button";
+import DemoFormModal from "@/components/ui/DemoFormModal";
 import { useUtmParams } from "@/hooks/useUtmParams";
 import { buildSignupUrl, trackEvent, trackPixel } from "@/lib/tracking";
 import { ease, duration, stagger } from "@/lib/motion";
@@ -54,6 +55,7 @@ function CoolingTimer() {
 }
 
 export default function FinalCTA() {
+  const [demoOpen, setDemoOpen] = useState(false);
   const utmParams = useUtmParams();
   const signupUrl = buildSignupUrl(undefined, utmParams);
   const prefersReduced = useReducedMotion();
@@ -129,7 +131,17 @@ export default function FinalCTA() {
           <Button variant="secondary" href="#demo">
             Ver a plataforma por dentro
           </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setDemoOpen(true);
+              trackEvent("cta_click", { location: "final", action: "demo_form" });
+            }}
+          >
+            Solicitar demonstração
+          </Button>
         </motion.div>
+        <DemoFormModal open={demoOpen} onClose={() => setDemoOpen(false)} />
       </motion.div>
     </section>
   );
