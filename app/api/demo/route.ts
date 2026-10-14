@@ -1,6 +1,10 @@
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 
+function esc(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+}
+
 const schema = z.object({
   nome: z.string().min(2).max(120),
   email: z.string().email(),
@@ -55,13 +59,13 @@ export async function POST(req: Request) {
         body: JSON.stringify({
           from: process.env.EMAIL_FROM ?? 'Clinvex <onboarding@resend.dev>',
           to: notifTo,
-          subject: `[Demo] ${nome} — ${nome_clinica || 'sem clínica'}`,
+          subject: `[Demo] ${esc(nome)} — ${esc(nome_clinica || 'sem clínica')}`,
           html: `<h2>Novo pedido de demonstração</h2>
-<p><strong>Nome:</strong> ${nome}</p>
-<p><strong>Email:</strong> ${email}</p>
-<p><strong>Telefone:</strong> ${telefone}</p>
-<p><strong>Clínica:</strong> ${nome_clinica || '—'}</p>
-<p><strong>Mensagem:</strong> ${mensagem || '—'}</p>
+<p><strong>Nome:</strong> ${esc(nome)}</p>
+<p><strong>Email:</strong> ${esc(email)}</p>
+<p><strong>Telefone:</strong> ${esc(telefone)}</p>
+<p><strong>Clínica:</strong> ${esc(nome_clinica || '—')}</p>
+<p><strong>Mensagem:</strong> ${esc(mensagem || '—')}</p>
 <p style="color:#888;font-size:12px">Enviado em ${new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' })}</p>`,
         }),
       }).catch(err => console.error('[demo] Email de notificação falhou:', err))
